@@ -18,15 +18,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private MemberMapper memberMapper;
 
 	@Override
-	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
 
-		log.warn("Load User By UserName : " + userName);
+		log.warn("Load User By UserName : " + memberId);
 
 		// userName means userid
 		// userName means userid
 		// MemberMapper를 이용해서 MemberVO를 조회하고,
 		// MemberVO의 인스턴스를 얻을 수 있다면 CustomUser 타입의 객체로 변환해서 반환.
-		MemberVO vo = memberMapper.read(userName);
+		MemberVO vo = memberMapper.read(memberId);
 
 		log.warn("queried by member mapper: " + vo);
 

@@ -54,7 +54,8 @@
 							<fieldset>
 								
 								<!-- Change this to a button or input when using this as a form -->
-								<a href="index.html" class="btn btn-lg btn-success btn-block">Logout</a>
+								<a href="index.html" class="btn btn-lg btn-success btn-block">Logout</a><br>
+							<a class="btn btn-info" onclick="history.go(-1)" style="text-align:center;">뒤로가기</a>
 							</fieldset>
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />

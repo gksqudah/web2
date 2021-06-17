@@ -23,7 +23,7 @@ public class CustomUser extends User {
 
 	public CustomUser(MemberVO vo) {
 
-		super(vo.getUserid(), vo.getUserpw(), vo.getAuthList().stream()
+		super(vo.getUserId(), vo.getUserPw(), vo.getAuthList().stream()
 				.map(auth -> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList()));
 
 		this.member = vo;

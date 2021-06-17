@@ -14,8 +14,6 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 
-	<context:annotation-config></context:annotation-config>
-
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 
 		<property name="driverClassName"
@@ -42,11 +40,17 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+	
+
 
 	<tx:annotation-driven />
 
 	<mybatis-spring:scan
 		base-package="kr.icia.mapper" />
+<!-- 			<mybatis-spring:scan
+		base-package="kr.icia.domain" />
+			<mybatis-spring:scan
+		base-package="kr.icia.controller" /> -->
 
 	<context:component-scan
 		base-package="kr.icia.service"></context:component-scan>
@@ -55,6 +59,10 @@
 		
 	<context:component-scan
     base-package="kr.icia.task"></context:component-scan>
+    
+    
+    	<context:component-scan
+    base-package="kr.icia.controller"></context:component-scan>
 		
 
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>

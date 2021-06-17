@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>     
+	 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	   <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 
 <!DOCTYPE html >
 <html lang="en">
@@ -21,6 +23,29 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="./resources/css2/styles.css" rel="stylesheet" />
+        
+        <style>
+	 
+/* 로그인 성공 영역 */
+.login_success_area{
+    height: 62%;
+
+    border: 2px solid #7474ad;
+    border-radius: 15px;
+    padding-top: 0px;
+   margin-left:20px;
+   margin-right:20px; 
+   
+}
+.login_success_area>span{
+    display : block;
+    text-align: left;
+
+    padding-top:0px;
+}
+        </style>
+        
+        
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -34,18 +59,40 @@
                         <li class="nav-item"><a class="nav-link ./resources/js2-scroll-trigger" href="#services">Services</a></li>
                         <li class="nav-item"><a class="nav-link ./resources/js2-scroll-trigger" href="#portfolio">Portfolio</a></li>
                         <li class="nav-item"><a class="nav-link ./resources/js2-scroll-trigger" href="#contact">Contact</a></li>
-			<li class="nav-item"><a class="nav-link ./resources/js2-scroll-trigger" href="/board/list">게시판</a></li>
-			
-			
-					<sec:authorize access="isAuthenticated()">
+			<li class="nav-item"><a class="nav-link ./resources/js2-scroll-trigger" href="/board/list">공지사항</a></li> <br>
+						<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+					
+<%-- 					<sec:authorize access="isAuthenticated()">
                         <li><a href="/customLogout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                         </sec:authorize>
                         
                         <sec:authorize access="isAnonymous()">
 		
-						<li><a href="./customLogin"><i class="fa fa-sign-out fa-fw"></i> Login</a></li>
-						</sec:authorize>
+						<li><a href="member/login"><i class="fa fa-sign-out fa-fw"></i> Login</a></li>
+						</sec:authorize> --%>
+						
+						
+ 
+                <!-- 로그인 하지 않은 상태 -->
+                 <c:if test = "${member == null }">
+                    <div class="login_button"><a href="/member/login">로그인&nbsp;&nbsp;&nbsp;</a></div> 
+                    <span><a href="/member/join">회원가입</a></span>                
+                     </c:if>    
+                
+                
+                  <!-- 로그인한 상태 -->
+                	  <c:if test="${ member != null }">
+                    <div class="login_success_area">
+                        <span>회원 : ${member.id}</span>
+                         <span>충전금액 : <fmt:formatNumber value="${member.money }" pattern="#,###.##"/></span>
+                           <span>포인트 : <fmt:formatNumber value="${member.point }" pattern="#,###" /></span>
+                    </div>
+               		 <li><a href="/customLogout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+				     </c:if>
+              
+ 
 			
 			
                     </ul>

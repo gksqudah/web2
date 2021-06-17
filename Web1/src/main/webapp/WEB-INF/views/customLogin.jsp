@@ -28,7 +28,15 @@
 <link href="./resources/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 
-
+<style>
+/* 로그인 실패시 경고글 */
+.login_warn{
+    margin-top: 30px;
+    text-align: center;
+    color : red;
+}
+ 
+</style>
 
 </head>
 
@@ -41,23 +49,33 @@
 						<h3 class="panel-title">Please Sign In</h3>
 					</div>
 					<div class="panel-body">
-						<form role="form" method='post' action="/login">
+						<form role="form" method='post' action="/login" id="login_form">
 							<fieldset>
 								<div class="form-group">
 									<input class="form-control" placeholder="userid"
-										name="username" type="text" autofocus>
+										name="id" type="text" autofocus>
 								</div>
 								<div class="form-group">
 									<input class="form-control" placeholder="Password"
-										name="password" type="password" value="">
+										name="pw" type="password" value="">
 								</div>
+								
+								
+ 
+					            <c:if test = "${result == 0 }">
+					                <div class = "login_warn">사용자 ID 또는 비밀번호를 잘못 입력하셨습니다.</div>
+					            </c:if>
+							
+								
 								<div class="checkbox">
 									<label> <input name="remember-me" type="checkbox">Remember
 										Me
 									</label>
 								</div>
 								<!-- Change this to a button or input when using this as a form -->
-								<a href="/" class="btn btn-lg btn-success btn-block">Login</a>
+								<a href="/" class="btn btn-lg btn-success btn-block" id="login_button">Login</a>
+								<a href="/member/join" class="btn">회원가입</a>
+								<a href="/" class="btn">뒤로가기</a>
 							</fieldset>
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
@@ -101,6 +119,12 @@
     $("form").submit();
     
   });
+  
+  
+  $("#login_button").click(function(){
+	  $("#login_form").attr("action", "/member/login");
+	  $("#login_form").submit();
+  })
   
   </script>
   

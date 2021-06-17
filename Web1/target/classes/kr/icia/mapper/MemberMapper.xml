@@ -4,29 +4,89 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.icia.mapper.MemberMapper">
 
+	<!-- <insert id="memberJoin"> INSERT INTO tb_member(memberid, memberpw, 
+		membername, memberaddr1, memberaddr2, money, point, gender, email, phone 
+		) VALUES (#{memberId }, #{memberPw}, #{name}, #{addr1}, #{addr2}, 0, 10000, 
+		#{gender }, , #{memberMail}, #{tel}) </insert> -->
 
-  <resultMap type="kr.icia.domain.MemberVO" id="memberMap">
-    <id property="userid" column="userid"/>
-    <result property="userid" column="userid"/>
-    <result property="userpw" column="userpw"/>
-    <result property="userName" column="username"/>
-    <result property="regDate" column="regdate"/>
-    <result property="updateDate" column="updatedate"/>
-    <collection property="authList" resultMap="authMap">
-    </collection> 
-  </resultMap>
-  
-  <resultMap type="kr.icia.domain.AuthVO" id="authMap">
-    <result property="userid" column="userid"/>
-    <result property="auth" column="auth"/>
-  </resultMap>
-  
-  <select id="read" resultMap="memberMap">
-SELECT 
-  mem.userid,  userpw, username, enabled, regdate, updatedate, auth
-FROM 
-  tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.userid = auth.userid 
-WHERE mem.userid = #{userid} 
-  </select>
+	<insert id="memberJoin"> INSERT INTO tbl_member  VALUES (#{id}, 
+		#{pw}, #{name}, sysdate, sysdate, 1, #{email}, #{post}, #{address1}, #{address2}, #{gender}, 0, 5000, #{birth}, #{tel}) </insert>
+
+
+<!-- 	<insert id="memberJoin"> INSERT INTO tbl_member
+		VALUES (#{id}, #{pw}, #{name }, 20, #{birth }, #{gender }, #{email }, #{tel }, #{post }, #{address1 }, #{address2}, 0, 0, 10000, sysdate )
+	</insert> -->
+
+
+<!-- 	<insert id="memberJoin"> INSERT INTO tbl_member
+		VALUES (#{userId}, #{userPw}, #{name }, sysdate )
+	</insert> -->
+
+
+	<select id="memberLogin" resultType="kr.icia.domain.MemberVO">
+
+		select userId, userPw from tbl_member where userId =
+		#{id}
+		and userPw = #{pw}
+
+	</select>
+
+
+
+<!-- 	<select id="id_check" resultType="Integer">
+		SELECT COUNT(*) FROM member
+		WHERE id=#{id}
+	</select> -->
+
+	<!-- 아이디 중복검사 -->
+	<select id="id_check" resultType="int">
+
+		select count(*) from tbl_member
+		where userId = #{id}
+
+	</select>
+
+	<resultMap type="kr.icia.domain.MemberVO" id="memberMap">
+		<id property="id" column="userid" />
+		<result property="id" column="userid" />
+		<result property="pw" column="userpw" />
+		<result property="name" column="username" />
+		<result property="regDate" column="regdate" />
+		<result property="updateDate" column="updatedate" />
+		<result property="money" column="money" />
+		<result property="point" column="point" />
+		<result property="tel" column="phone" />
+		<result property="email" column="email" />
+		<result property="post" column="post" />
+		<result property="address1" column="adress1" />
+		<result property="address2" column="address2" />
+		<result property="gender" column="gender" />
+		<result property="birth" column="birth" />
+		<collection property="authList" resultMap="authMap">
+		</collection>
+	</resultMap>
+
+	<resultMap type="kr.icia.domain.AuthVO" id="authMap">
+		<result property="id" column="userid" />
+		<result property="auth" column="auth" />
+	</resultMap>
+
+	<select id="read" resultMap="memberMap">
+		SELECT
+		mem.id, pw, name, enabled, regdate, updatedate, auth
+		FROM
+		tbl_member mem LEFT OUTER JOIN
+		tbl_member_auth auth on mem.userid = auth.userid
+		WHERE mem.userid =
+		#{id}
+	</select>
+	
+<!-- 	      로그인
+      <select id="memberLogin" resultType="kr.icia.domain.MemberVO">
+      
+         select userId, userpw, username from tbl_member where userId = #{id} and userPw = #{pw}
+      
+      </select> -->
+
 
 </mapper>
